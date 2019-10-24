@@ -1,0 +1,32 @@
+---
+title: "2 way ANOVA with interaction"
+author: "Jeevan"
+date: "26/06/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+maize<-read.table(file = "clipboard",header = TRUE)
+str(maize)
+boxplot(Yield~Treatments, data = maize, xlab = "Treatments", ylab = "Yield", col = c("#00AFBB", "#E7B800")) 
+boxplot(Yield~Moisture, data = maize, xlab = "Moisture", ylab = "Yield", col = c("#00AFBB", "#E7B800"))
+boxplot(Yield~Interaction, data = maize, xlab = "Treatment*Moisture", ylab = "Yield",col = c("#00AFBB", "#E7B800"))
+model<-aov(Yield~Treatments+Moisture+Treatments*Moisture, data = maize)
+summary(model)
+library(lsmeans)
+lm1<-lm(Yield~Treatments+Moisture+Treatments*Moisture, data=maize) 
+lsm1<-lsmeans(lm1,"Treatments")
+pairs(lsm1)
+lsm2<-lsmeans(lm1,"Moisture") 
+pairs(lsm2)
+lsm3<-lsmeans(lm1,~Treatments:Moisture)
+pairs(lsm3)
+library(multcompView)
+CLD(lsm1,Letters = "abcde")
+CLD(lsm2,Letters = "abcdefgh")
+CLD(lsm3,Letters = "abcdefgh")
+```

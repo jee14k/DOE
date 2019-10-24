@@ -1,0 +1,28 @@
+---
+title: "Lab 2_1740256"
+author: "Jeevan"
+date: "18/06/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+Strain_Treat <- read.csv("C:/Users/Jeevan/Desktop/Christ University/Statistics/Strain_Treat.csv")
+View(Strain_Treat)
+model<-aov(Treatment~Strain,data = Strain_Treat)
+summary(model)
+out<-LSD.test(model,"Strain",p.adj = "bonferroni",alpha=0.01)
+out
+```
+
+```{r}
+Pasture_Feed <- read.csv("C:/Users/Jeevan/Desktop/Christ University/Statistics/Pasture_Feed.csv")
+View(Pasture_Feed)
+model<-aov(Pasture~Feed,data = Pasture_Feed)
+summary(model)
+out<-LSD.test(model,"Pasture",p.adj = "bonferroni",alpha=0.01)
+out
+```

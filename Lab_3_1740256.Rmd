@@ -1,0 +1,47 @@
+---
+title: "Assignment-3"
+author: "Jeevan"
+date: "25/06/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+Milk <- read.csv("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/Milk.csv")
+View(Milk)
+library(agricolae)
+str(Milk)
+attach(Milk)
+boxplot(Level~Machine)
+model <- aov(Level~Machine)
+summary(model)
+out <- LSD.test(model,"Level",p.adj = "bonferroni",alpha=0.01) 
+out
+```
+
+```{r}
+Paneer <- read.csv("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/Paneer.csv")
+View(Paneer)
+str(Paneer)
+Paneer$Batch = as.factor(Paneer$Batch)
+Paneer$Fat = as.factor(Paneer$Fat)
+str(Paneer)
+attach(Paneer)
+boxplot(Values~Fat,data = Paneer,xlab = "Fat",ylab = "Values",col = c("#00AFBB","#E7B800"))
+boxplot(Values~Batch,data = Paneer,xlab = "Batch",ylab = "Values",col = c("#00AFBB","#E7B800"))
+model <- aov(Values ~ Batch + Fat, data = Paneer)
+summary(model)
+library(lsmeans)
+lml = lm(Values ~ Batch+Fat, data = Paneer)
+lsm1 = lsmeans(lml, "Fat")
+lsm1
+pairs(lsm1)
+library(multcompView)
+CLD(lsm1,Letters = "abc")
+lsm2 = lsmeans(lml, "Batch")
+lsm2
+pairs(lsm2)
+```

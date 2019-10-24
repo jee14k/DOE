@@ -1,0 +1,30 @@
+---
+title: "LSD_Lab_7"
+author: "Jeevan"
+date: "03/09/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(lsmeans)
+rname <- c(rep("E1",5),rep("E2",5),rep("E3",5),rep("E4",5),rep("E5",5))
+cname <- c(rep("M1",1),rep("M2",1),rep("M3",1),rep("M4",1),rep("M5",1))
+seed <- c("A","B","C","D","E","B","C","D","E","A","C","D","E","A","B","D","E","A","B","C","E","A","B","C","D")
+freq <- c(31,24,20,20,18,21,27,23,25,31,21,27,25,29,21,21,25,33,25,22,21,37,24,24,20)
+mydata <- data.frame(rname,cname,seed,freq)
+mydata
+matrix(mydata$seed,5,5)
+matrix(mydata$freq,5,5)
+myfit = lm(freq~rname+cname+seed,mydata)
+myfit
+str(mydata)
+a = anova(myfit)
+a
+x = lsmeans(myfit,"seed")
+pairs(x)
+plot(pairs(x))
+```

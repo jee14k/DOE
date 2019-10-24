@@ -1,0 +1,35 @@
+---
+title: "Assignment 5"
+author: "Jeevan"
+date: "02/07/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readxl)
+data <- read_excel("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/Assignment5...xlsx",sheet = 1)
+View(data)
+attach(data)
+wilcox.test(data$`Cholestral level`~data$mealpattern)
+wilcox.test(data$BMI~data$mealpattern)
+is.factor(data$mealpattern)
+is.factor(data$`Cholestral level`)
+as.factor(data$mealpattern)
+data2 <- read_excel("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/Assignment5...xlsx",sheet = 2)
+View(data2)
+data2$Residence<-as.factor(data2$Residence)
+kruskal.test(data2$BMI~data2$Residence)
+kruskal.test(data2$`Cholestral level`~data2$Residence)
+data3 <- read_excel("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/Assignment5...xlsx",sheet = 3)
+View(data3)
+data3$Residence<-as.factor(data3$Residence)
+data3$mealpattern<-as.factor(data3$mealpattern)
+model<-aov(data3$BMI~data3$Residence)
+summary(model)
+model1<-aov(data3$BMI~data3$mealpattern)
+summary(model1)
+```

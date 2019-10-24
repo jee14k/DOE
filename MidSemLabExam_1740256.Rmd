@@ -1,0 +1,26 @@
+---
+title: "MidSemLab 1740256"
+author: "Jeevan"
+date: "17/09/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readxl) # importing the package for reading data
+library(lsmeans)# for performing CLD
+library(multcompView)
+MidSem_Q2 <- read_excel("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/MidSem_Q2.xlsx") # importing the data
+# View(MidSem_Q2) # viewing the data
+str(MidSem_Q2) # getting the structure of the data
+attach(MidSem_Q2) # attaching the data for ease
+model<-aov(Sales~Region+Period) # making a 1 way ANOVA model 
+summary(model) # getting a summary of the model
+lml = lm(Sales ~ Region+Period, data = MidSem_Q2)
+lsm1 = lsmeans(lml, "Region")
+lsm1
+pairs(lsm1)
+```

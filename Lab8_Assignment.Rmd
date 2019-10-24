@@ -1,0 +1,26 @@
+---
+title: "Lab 8"
+author: "Jeevan ~ 1740256"
+date: "24/09/2019"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Analyse the following 2^3 factorial experiment. 
+
+```{r}
+library(readxl)
+Lab8_Data_56 <- read_excel("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/Lab8_Data_56.xlsx")
+View(Lab8_Data_56)
+attach(Lab8_Data_56)
+boxplot(Yield~Factor1,data = Lab8_Data_56,xlab = "A",ylab = "Yield",col = c("#00AFBB","#E7B800"))
+boxplot(Yield~Factor2,data = Lab8_Data_56,xlab = "B",ylab = "Yield",col = c("#00AFBB","#E7B800"))
+boxplot(Yield~Interaction,data = Lab8_Data_56,xlab = "AB",ylab = "Yield",col = c("#00AFBB","#E7B800"))
+model <- aov(Yield~Factor1+Factor2+Factor1*Factor2,data = Lab8_Data_56)
+summary(model)
+```

@@ -1,0 +1,24 @@
+---
+title: "MidSemLab"
+author: "Jeevan"
+date: "17/09/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readxl)
+library(agricolae)
+MidSem_Tyre <- read_excel("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/MidSem_Tyre.xlsx")
+View(MidSem_Tyre)
+str(MidSem_Tyre)
+attach(MidSem_Tyre)
+model <- aov(Replication~Brand,data = MidSem_Tyre)
+summary(model)
+out <- LSD.test(model,"Brand",p.adj = "bonferroni",alpha = 0.01)
+out
+```
+

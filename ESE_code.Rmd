@@ -1,0 +1,53 @@
+---
+title: "ESE LabExam"
+author: "Jeevan ~ 1740256"
+date: "01/10/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readxl)
+library(lsmeans)
+ESEQ1_data <- read_excel("ESEQ1_data.xlsx")
+#View(ESEQ1_data)
+attach(ESEQ1_data)
+model <- aov(Yield~Blocks,data = ESEQ1_data)
+linear <- lm(Yield~Blocks,data = ESEQ1_data)
+summary(linear)
+lsmeans(linear,"Blocks")
+summary(model)
+```
+
+```{r}
+library(readxl)
+ESEQ2_data <- read_excel("ESEQ2_data.xlsx")
+# View(ESEQ2_data)
+attach(ESEQ2_data)
+model1 <- aov(Clay~Column+Row,data = ESEQ2_data)
+summary(model1)
+linear2 <- lm(Clay~Column+Row,data = ESEQ3_data)
+summary(linear2)
+lsmeans(linear2,"Column")
+lsmeans(linear2,"Row")
+```
+
+```{r}
+library(readxl)
+ESEQ3_data <- read_excel("ESEQ3_data.xlsx")
+# View(ESEQ3_data)
+attach(ESEQ3_data)
+model2 <- aov(Yield~Factorp+Factorv+Factorw+Factorp*Factorv+Factorp*Factorw+Factorv*Factorw+Factorp*Factorv*Factorw,data = ESEQ3_data)
+summary(model2)
+# Factor v, w and vp are less than 0.05 from the model
+boxplot(Yield~Factorp,col = c("#00AFBB","#E7B800"))
+boxplot(Yield~Factorv,col = c("#00AFBB","#E7B800"))
+boxplot(Yield~Factorw,col = c("#00AFBB","#E7B800"))
+boxplot(Yield~Factorp*Factorv,col = c("#00AFBB","#E7B800"))
+boxplot(Yield~Factorp*Factorw,col = c("#00AFBB","#E7B800"))
+boxplot(Yield~Factorv*Factorw,col = c("#00AFBB","#E7B800"))
+boxplot(Yield~Factorp*Factorv*Factorw,col = c("#00AFBB","#E7B800"))
+```

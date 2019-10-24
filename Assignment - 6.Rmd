@@ -1,0 +1,30 @@
+---
+title: "Assignment_6"
+author: "Jeevan"
+date: "16/07/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+data <- read.table(file = "clipboard",header = TRUE)
+str(data)
+attach(data)
+treatment <- as.factor(data$treatment)
+block <- as.factor(data$block)
+str(data)
+boxplot(data$yield ~ data$treatment, xlab = "Treatment", ylab = "Yield",
+        col = c("#00AFBB", "#E7B800")) 
+m1 <- aov(data$yield ~ data$treatment + data$block)
+summary(m1)
+```
+
+```{r}
+lm1 <- lm(yield~treatment+block)
+library(lsmeans)
+lsm1 <- lsmeans(lm1,"treatment")
+pairs(lsm1)
+```

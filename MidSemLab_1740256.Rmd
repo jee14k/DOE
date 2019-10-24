@@ -1,0 +1,49 @@
+---
+title: "MidSemLab 1740256"
+author: "Jeevan"
+date: "17/09/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+Paneer <- read.csv("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/Paneer.csv")
+# View(Paneer)
+str(Paneer)
+Paneer$Batch = as.factor(Paneer$Batch)
+Paneer$Fat = as.factor(Paneer$Fat)
+str(Paneer)
+attach(Paneer)
+boxplot(Values~Fat,data = Paneer,xlab = "Fat",ylab = "Values",col = c("#00AFBB","#E7B800"))
+boxplot(Values~Batch,data = Paneer,xlab = "Batch",ylab = "Values",col = c("#00AFBB","#E7B800"))
+model <- aov(Values ~ Batch + Fat, data = Paneer)
+summary(model)
+lml = lm(Values ~ Batch+Fat, data = Paneer)
+lsm1 = lsmeans(lml, "Fat")
+lsm1
+pairs(lsm1)
+library(multcompView)
+CLD(lsm1,Letters = "abc")
+lsm2 = lsmeans(lml, "Batch")
+lsm2
+pairs(lsm2)
+```
+
+```{r}
+library(readxl) # importing the package for reading data
+library(lsmeans)# for performing CLD
+library(multcompView)
+MidSem_Q2 <- read_excel("C:/Users/Jeevan/Desktop/Christ University/Statistics/DOE/MidSem_Q2.xlsx") # importing the data
+# View(MidSem_Q2) # viewing the data
+str(MidSem_Q2) # getting the structure of the data
+attach(MidSem_Q2) # attaching the data for ease
+model<-aov(Sales~Region+Period) # making a 1 way ANOVA model 
+summary(model) # getting a summary of the model
+lml = lm(Sales ~ Region+Period, data = MidSem_Q2)
+lsm1 = lsmeans(lml, "Region")
+lsm1
+pairs(lsm1)
+```
